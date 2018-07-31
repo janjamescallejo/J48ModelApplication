@@ -1,0 +1,1 @@
+C:\\Users\\Lenovo\\Desktop\\Thesis\\Models\\PrototypeTester.csv C:\\Users\\Lenovo\\Desktop\\Thesis\\Models\\PrototypeTester.arff C:\\Users\\Lenovo\\Desktop\\Thesis\\Models\\J48.model C:\\Users\\Lenovo\\Desktop\\Thesis\\Models\\J48Results.csv
