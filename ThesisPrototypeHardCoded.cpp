@@ -604,19 +604,18 @@ string SVMdecision(int i, double joy, double fear, double disgust, double sadnes
 }
 string NBdecision(int i, double joy, double fear, double disgust, double sadness, double anger, double surprise, double contempt, double calm, double angered, double joyful, double sorrow)
 {
-	double bweights[88];
+	double bweights[11][8];
 	string n;
-	int j = 0;
 	ifstream NBWeights;
 	NBWeights.open(nbResults);
-	try{
-		while (NBWeights.good())
+	try {
+		for (int i = 0; NBWeights.good(); i++)
 		{
-			
+			for (int j = 0; j<8; j++)
+			{
 				getline(NBWeights, n, '\n');
-				bweights[j] = stod(n);
-				
-			j++;
+				bweights[i][j] = stod(n);
+			}
 		}
 	}
 	catch (exception e)
@@ -637,28 +636,30 @@ string NBdecision(int i, double joy, double fear, double disgust, double sadness
 	input[9] = joyful;
 	input[10] = sorrow;
 	double inputMeanSuccess[11];
-	for (int i = 0; i < 10; i++)
+	for (int i = 0; i < 11; i++)
 	{
-		inputMeanSuccess[i] = bweights[8*i];
+		inputMeanSuccess[i] = bweights[i][0];
 	}
 	double inputMeanFail[11];
-	for (int i = 0; i < 10; i++)
+	for (int i = 0; i < 11; i++)
 	{
-		inputMeanFail[i] = bweights[(8*i)+1];
+		inputMeanFail[i] = bweights[i][1];
 	}
 	double inputVarianceSuccess[11];
-	for (int i = 0; i < 10; i++)
+	for (int i = 0; i < 11; i++)
 	{
-		inputVarianceSuccess[i] = bweights[(8 * i) + 2]* bweights[(8 * i) + 2];
+		inputVarianceSuccess[i] = bweights[i][2];
 	}
 	double inputVarianceFail[11];
-	for (int i = 0; i < 10; i++)
+	for (int i = 0; i < 11; i++)
 	{
-		inputVarianceFail[i] = bweights[(8 * i) + 3] * bweights[(8 * i) + 3];
+		inputVarianceFail[i] = bweights[i][3];
 	}
 	double probableSuccess[11];
 	double probableFail[11];
 	double label[2];
+	label[0] = 1;
+	label[1] = 1;
 	for (int i = 0; i < 11; i++)
 	{
 		probableSuccess[i] = 1 / sqrt(2 * 3.14 * inputVarianceSuccess[i]) * exp(-(input[i] - inputMeanSuccess[i])* (input[i] - inputMeanSuccess[i]) / (2 * inputVarianceSuccess[i]));
@@ -808,7 +809,7 @@ void newCSV()
 	int i = 0;
 	string contents[34][11];
 	ifstream oldcsv;
-	oldcsv.open("C:\\Users\\Lenovo\\Desktop\\Thesis\\Data Sets\\Med Rep Datasets\\Med Rep Emotion Testing Dataset 30.csv");
+	oldcsv.open("C:\\Users\\Lenovo\\Desktop\\Thesis\\Data Sets\\Med Rep Datasets\\Med Rep Emotion Testing Dataset 40.csv");
 	try
 	{
 		while (oldcsv.good())
@@ -861,18 +862,18 @@ void newCSV()
 int main()
 {
 	
-	string svmModel = "C:\\Users\\Lenovo\\Desktop\\Thesis\\Models\\SVM.model";
+	string svmModel = "C:\\Users\\Lenovo\\Desktop\\Thesis\\Question Removal\\SVMMedRep.model";
 	svmResults = "C:\\Users\\Lenovo\\Desktop\\Thesis\\Models\\SVM-Model.csv";
-	string nbModel = "C:\\Users\\Lenovo\\Desktop\\Thesis\\Models\\NB.model";
+	string nbModel = "C:\\Users\\Lenovo\\Desktop\\Thesis\\Question Removal\\NaiveBatesMedRep.model";
 	nbResults = "C:\\Users\\Lenovo\\Desktop\\Thesis\\Models\\NB-Model.csv";
-	string nnModel = "C:\\Users\\Lenovo\\Desktop\\Thesis\\Models\\NN.model";
+	string nnModel = "C:\\Users\\Lenovo\\Desktop\\Thesis\\Question Removal\\NeuralNetworkMedRep.model";
 	nnResults = "C:\\Users\\Lenovo\\Desktop\\Thesis\\Models\\NN-Model.csv";
 	WekaJavaModel(svmModel, svmResults, nbModel, nbResults, nnModel, nnResults);
 	cout << "Model Test" << endl;
 	newCSV();
 	string newcsV = "C:\\Users\\Lenovo\\Desktop\\Thesis\\Models\\NewCSV.csv";
 	string newarfF = "C:\\Users\\Lenovo\\Desktop\\Thesis\\Models\\NewCSV.arff";
-	string j48Model = "C:\\Users\\Lenovo\\Desktop\\Thesis\\Models\\J48.model";
+	string j48Model = "C:\\Users\\Lenovo\\Desktop\\Thesis\\Question Removal\\J48MedRep.model";
 	j48Results = "C:\\Users\\Lenovo\\Desktop\\Thesis\\Models\\J48Results.csv";
 	j48ModelImplementation(newcsV, newarfF, j48Model, j48Results);
 	int NBSuccess = 0;
@@ -903,7 +904,7 @@ int main()
 	ofstream csv;
 	csv.open("C:\\Users\\Lenovo\\Desktop\\Thesis\\Data Sets\\Results.csv");
 	ifstream sample;
-	sample.open("C:\\Users\\Lenovo\\Desktop\\Thesis\\Data Sets\\Med Rep Datasets\\Med Rep Emotion Testing Dataset 30.csv");
+	sample.open("C:\\Users\\Lenovo\\Desktop\\Thesis\\Data Sets\\Med Rep Datasets\\Med Rep Emotion Testing Dataset 40.csv");
 	if (!sample.is_open())
 		cout << "Error: File Open" << '\n';
 	try {
