@@ -20,503 +20,14 @@ string nnResults;
 string nbResults;
 string svmResults;
 string j48Results;
+string dataInput;
+string newInput;
 using namespace std;
 //database d;
 string J48decision(int i, double joy, double fear, double disgust, double sadness, double anger, double surprise, double contempt, double calm, double angered, double joyful, double sorrow)
 {
 	string decision;
-	/*if (sadness <= 0.0724)
-	{
-		if (disgust <= 0.7575)
-		{
-			if (anger <= 0.0192)
-			{
-				if (joyful <= 26)
-				{
-					if (sadness <= 0.0015)
-					{
-						if (fear <= 0.0012)
-						{
-							if (sadness <= 0)
-							{
-								if (disgust <= 0.0039)
-								{
-									if (fear <= 0.0007)
-									{
-										if (contempt <= 0.0001)
-										{
-											if (contempt <= 0)
-											{
-												decision = "Low";
-											}
-											else
-											{
-												if (disgust < 0.0009)
-												{
-													decision = "High";
-												}
-												else
-												{
-													if (fear <= 0.0003)
-													{
-														decision = "Low";
-													}
-													else
-													{
-														if (joy <= 99.8953)
-														{
-															decision = "High";
-														}
-														else
-														{
-															decision = "Low";
-														}
-													}
-												}
-											}
-										}
-										else
-										{
-											if (angered <= 6)
-											{
-												decision = "Low";
-											}
-											else
-											{
-												decision = "High";
-											}
-										}
-									}
-									else
-									{
-										decision = "High";
-									}
-								}
-								else
-								{
-									decision = "Low";
-								}
-							}
-							else
-							{
-								if (angered <= 3)
-								{
-									if (anger <= 0.0002)
-									{
-										if (contempt <= 0.0002)
-										{
-											decision = "Low";
-										}
-										else
-										{
-											decision = "High";
-										}
-									}
-									else
-									{
-										decision = "Low";
-									}
-								}
-								else
-								{
-									decision = "Low";
-								}
-							}
-						}
-						else
-						{
-							if (sorrow <= 6)
-							{
-								if (disgust <= 0.0935)
-								{
-									decision = "High";
-								}
-								else
-								{
-									if (joy <= 99.9288)
-									{
-										decision = "High";
-									}
-									else
-									{
-										decision = "Low";
-									}
-								}
-							}
-							else
-							{
-								if (joy <= 99.9256)
-								{
-									if (joy <= 99.9095)
-									{
-										decision = "Low";
-									}
-									else
-									{
-										decision = "High";
-									}
-								}
-								else
-								{
-									decision = "Low";
-								}
-							}
-						}
-					}
-					else
-					{
-						if (joy <= 99.5734)
-						{
-							if (joy <= 99.5336)
-							{
-								if (anger <= 0.0048)
-								{
-									decision = "Low";
-								}
-								else
-								{
-									if (sorrow <= 2)
-									{
-										if (sorrow <= 0)
-										{
-											if (joy <= 0.3651)
-											{
-												if (sadness <= 0.0249)
-												{
-													if (joy <= 0.003)
-													{
-														if (angered <= 2)
-														{
-															decision = "Low";
-														}
-														else
-														{
-															if (angered <= 5)
-															{
-																decision = "High";
-															}
-															else
-															{
-																decision = "Low";
-															}
-														}
-													}
-													else
-													{
-														decision = "High";
-													}
-												}
-												else
-												{
-													if (disgust <= 0.5649)
-													{
-														if (anger <= 0.0049)
-														{
-															decision = "Low";
-														}
-														else
-														{
-															if (joy <= 0.002)
-															{
-																decision = "High";
-															}
-															else
-															{
-																if (fear <= 0.0058)
-																{
-																	decision = "High";
-																}
-																else
-																{
-																	decision = "Low";
-																}
-															}
-														}
-													}
-													else
-													{
-														decision = "Low";
-													}
-												}
-											}
-											else
-											{
-												decision = "Low";
-											}
-										}
-										else
-										{
-											decision = "High";
-										}
-									}
-									else
-									{
-										decision = "Low";
-									}
-								}
-							}
-							else
-							{
-								if (joyful <= 11)
-								{
-									if (joy <= 99.5652)
-									{
-										if (angered <= 0)
-										{
-											decision = "High";
-										}
-										else
-										{
-											decision = "Low";
-										}
-									}
-									else
-									{
-										decision = "High";
-									}
-								}
-								else
-								{
-									decision = "Low";
-								}
-							}
-						}
-						else
-						{
-							decision = "Low";
-						}
-					}
-				}
-				else
-				{
-					decision = "Low";
-				}
-			}
-			else
-			{
-				decision = "Low";
-			}
-		}
-		else
-		{
-			if (calm <= 43)
-			{
-				if (calm <= 30)
-				{
-					decision = "Low";
-				}
-				else
-				{
-					if (joy <= 99.928)
-					{
-						if (calm <= 41)
-						{
-							decision = "Low";
-						}
-						else
-						{
-							if (sadness <= 0.0003)
-							{
-								decision = "High";
-							}
-							else
-							{
-								if (sadness <= 0.0247)
-								{
-									decision = "Low";
-								}
-								else
-								{
-									if (contempt <= 4.3306)
-									{
-										decision = "High";
-									}
-									else
-									{
-										decision = "Low";
-									}
-								}
-							}
-						}
-					}
-					else
-					{
-						if (calm <= 37)
-						{
-							decision = "High";
-						}
-						else
-						{
-							if (disgust <= 46.1686)
-							{
-								decision = "Low";
-							}
-							else
-							{
-								decision = "High";
-							}
-						}
-					}
-				}
-			}
-			else
-			{
-				if (contempt <= 0.1875)
-				{
-					if (disgust <= 99.5419)
-					{
-						decision = "Low";
-					}
-					else
-					{
-						decision = "High";
-					}
-				}
-				else
-				{
-					if (anger <= 0.069)
-					{
-						decision = "High";
-					}
-					else
-					{
-						if (sadness <= 0.0322)
-						{
-							if (sadness <= 0.0109)
-							{
-								decision = "High";
-							}
-							else
-							{
-								decision = "Low";
-							}
-						}
-						else
-						{
-							decision = "High";
-						}
-					}
-				}
-			}
-		}
-	}
-	else
-	{
-		if (calm <= 33)
-		{
-			decision = "Low";
-		}
-		else
-		{
-			if (surprise <= 0.2312)
-			{
-				decision = "High";
-			}
-			else
-			{
-				if (joy <= 0.0019)
-				{
-					if (sorrow <= 4)
-					{
-						if (disgust <= 0.4563)
-						{
-							if (contempt <= 0.2309)
-							{
-								decision = "High";
-							}
-							else
-							{
-								decision = "Low";
-							}
-						}
-						else
-						{
-							if (sadness <= 43.7258)
-							{
-								decision = "High";
-							}
-							else
-							{
-								decision = "Low";
-							}
-						}
-					}
-					else
-					{
-						if (angered <= 0)
-						{
-							decision = "Low";
-						}
-						else
-						{
-							if (fear <= 0.25)
-							{
-								decision = "Low";
-							}
-							else
-							{
-								decision = "High";
-							}
-						}
-					}
-				}
-				else
-				{
-					if (joy <= 99.5701)
-					{
-						decision = "High";
-					}
-					else
-					{
-						if (contempt <= 0.2655)
-						{
-							decision = "Low";
-						}
-						else
-						{
-							if (sadness <= 9.2052)
-							{
-								if (anger <= 52.2878)
-								{
-									if (sorrow <= 6)
-									{
-										decision = "High";
-									}
-									else
-									{
-										if (sadness <= 1.7957)
-										{
-											decision = "Low";
-										}
-										else
-										{
-											decision = "High";
-										}
-									}
-								}
-								else
-								{
-									decision = "Low";
-								}
-							}
-							else
-							{
-								if (sorrow <= 2)
-								{
-									decision = "Low";
-								}
-								else
-								{
-									decision = "High";
-								}
-							}
-						}
-					}
-				}
-			}
-		}
-	}
-	//d.insertJ48Result(num, i, decision);*/
+	
 string j48Values[34];
 int j=0;
 string k;
@@ -648,12 +159,12 @@ string NBdecision(int i, double joy, double fear, double disgust, double sadness
 	double inputVarianceSuccess[11];
 	for (int i = 0; i < 11; i++)
 	{
-		inputVarianceSuccess[i] = bweights[i][2];
+		inputVarianceSuccess[i] = bweights[i][2]*bweights[i][2];
 	}
 	double inputVarianceFail[11];
 	for (int i = 0; i < 11; i++)
 	{
-		inputVarianceFail[i] = bweights[i][3];
+		inputVarianceFail[i] = bweights[i][3]*bweights[i][3];
 	}
 	double probableSuccess[11];
 	double probableFail[11];
@@ -803,13 +314,13 @@ void j48ModelImplementation(string CSVnew,string ARFFnew, string J48model, strin
 	ShellExecuteA(NULL, "open", "C:\\Program Files (x86)\\Common Files\\Oracle\\Java\\javapath\\java.exe", par, NULL, SW_SHOWMAXIMIZED);
 	system("PAUSE");
 }
-void newCSV()
+void newCSV(string older, string newer)
 {
 	cout << "Testing of New CSV creation" << endl;
 	int i = 0;
 	string contents[34][11];
 	ifstream oldcsv;
-	oldcsv.open("C:\\Users\\Lenovo\\Desktop\\Thesis\\Data Sets\\Med Rep Datasets\\Med Rep Emotion Testing Dataset 40.csv");
+	oldcsv.open(older);
 	try
 	{
 		while (oldcsv.good())
@@ -846,7 +357,7 @@ void newCSV()
 		cout << endl;
 	}*/
 	ofstream newcsv;
-	newcsv.open("C:\\Users\\Lenovo\\Desktop\\Thesis\\Models\\NewCSV.csv");
+	newcsv.open(newer);
 	newcsv << "joy" << "," << "fear" << "," << "disgust" << "," << "sadness" << "," << "anger" << "," << "surprise" << "," << "contempt" << "," << "Calm" << "," << "Angered" << "," << "Joyful" << "," << "Sorrow" << "," << "Performance";
 	newcsv << "\n";
 	for (int i = 0; i < 34; i++)
@@ -861,20 +372,21 @@ void newCSV()
 }
 int main()
 {
-	
-	string svmModel = "C:\\Users\\Lenovo\\Desktop\\Thesis\\Question Removal\\SVMMedRep.model";
-	svmResults = "C:\\Users\\Lenovo\\Desktop\\Thesis\\Models\\SVM-Model.csv";
-	string nbModel = "C:\\Users\\Lenovo\\Desktop\\Thesis\\Question Removal\\NaiveBatesMedRep.model";
-	nbResults = "C:\\Users\\Lenovo\\Desktop\\Thesis\\Models\\NB-Model.csv";
-	string nnModel = "C:\\Users\\Lenovo\\Desktop\\Thesis\\Question Removal\\NeuralNetworkMedRep.model";
-	nnResults = "C:\\Users\\Lenovo\\Desktop\\Thesis\\Models\\NN-Model.csv";
+	dataInput = "C:\\Users\\Lenovo\\Desktop\\Thesis\\READ\\Real Estate Emotion Dataset 20.csv";
+	newInput = "C:\\Users\\Lenovo\\Desktop\\Thesis\\READ\\NewCSV.csv";
+	string svmModel = "C:\\Users\\Lenovo\\Desktop\\Thesis\\READ\\SVMModel.model";
+	svmResults = "C:\\Users\\Lenovo\\Desktop\\Thesis\\READ\\SVMResults.csv";
+	string nbModel = "C:\\Users\\Lenovo\\Desktop\\Thesis\\READ\\NBModel.model";
+	nbResults = "C:\\Users\\Lenovo\\Desktop\\Thesis\\READ\\NBResults.csv";
+	string nnModel = "C:\\Users\\Lenovo\\Desktop\\Thesis\\READ\\NNModel.model";
+	nnResults = "C:\\Users\\Lenovo\\Desktop\\Thesis\\READ\\NNResults.csv";
 	WekaJavaModel(svmModel, svmResults, nbModel, nbResults, nnModel, nnResults);
 	cout << "Model Test" << endl;
-	newCSV();
-	string newcsV = "C:\\Users\\Lenovo\\Desktop\\Thesis\\Models\\NewCSV.csv";
-	string newarfF = "C:\\Users\\Lenovo\\Desktop\\Thesis\\Models\\NewCSV.arff";
-	string j48Model = "C:\\Users\\Lenovo\\Desktop\\Thesis\\Question Removal\\J48MedRep.model";
-	j48Results = "C:\\Users\\Lenovo\\Desktop\\Thesis\\Models\\J48Results.csv";
+	newCSV(dataInput,newInput);
+	string newcsV = "C:\\Users\\Lenovo\\Desktop\\Thesis\\READ\\NewCSV.csv";
+	string newarfF = "C:\\Users\\Lenovo\\Desktop\\Thesis\\READ\\NewCSV.arff";
+	string j48Model = "C:\\Users\\Lenovo\\Desktop\\Thesis\\READ\\J48Model.model";
+	j48Results = "C:\\Users\\Lenovo\\Desktop\\Thesis\\READ\\J48Results.csv";
 	j48ModelImplementation(newcsV, newarfF, j48Model, j48Results);
 	int NBSuccess = 0;
 	int NBFail = 0;
@@ -904,7 +416,7 @@ int main()
 	ofstream csv;
 	csv.open("C:\\Users\\Lenovo\\Desktop\\Thesis\\Data Sets\\Results.csv");
 	ifstream sample;
-	sample.open("C:\\Users\\Lenovo\\Desktop\\Thesis\\Data Sets\\Med Rep Datasets\\Med Rep Emotion Testing Dataset 40.csv");
+	sample.open(dataInput);
 	if (!sample.is_open())
 		cout << "Error: File Open" << '\n';
 	try {
