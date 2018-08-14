@@ -12,6 +12,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include "Database.h"
+using namespace std;
 double sout;
 double nsucsum = 0;
 double nfaisum = 0;
@@ -22,7 +23,7 @@ string svmResults;
 string j48Results;
 string dataInput;
 string newInput;
-using namespace std;
+
 //database d;
 string J48decision(int i, double joy, double fear, double disgust, double sadness, double anger, double surprise, double contempt, double calm, double angered, double joyful, double sorrow)
 {
@@ -197,7 +198,7 @@ string NBdecision(int i, double joy, double fear, double disgust, double sadness
 		return data;
 	}
 }
-void NNdecision(int i, double joy, double fear, double disgust, double sadness, double anger, double surprise, double contempt, double calm, double angered, double joyful, double sorrow)
+string NNdecision(int i, double joy, double fear, double disgust, double sadness, double anger, double surprise, double contempt, double calm, double angered, double joyful, double sorrow)
 {
 	double NWeights[86];
 	ifstream nnWeights;
@@ -281,17 +282,19 @@ void NNdecision(int i, double joy, double fear, double disgust, double sadness, 
 	//double failcalc2 = ((1 - (exp(-(2 * failcalc1)))) / (1 + (exp(-(2 * failcalc1)))));
 	//double failcalc2 = (1 / (1 + (exp(-failcalc1))));
 	double failcalc2 = tanh(failcalc1);
-	cout << "High: " << successcalc2 << "  Low " << failcalc2 << endl;
+	//cout << "High: " << successcalc2 << "  Low " << failcalc2 << endl;
 	nsucsum = successcalc2 + nsucsum;
 	nfaisum = failcalc2 + nfaisum;
 	toCSV[3] = successcalc2;
 	toCSV[4] = failcalc2;
 	if (successcalc2 > failcalc2)
 	{
+		return "High";
 		//d.insertNNResult(num, i, successcalc2, failcalc2, "SUCCESS");
 	}
 	else
 	{
+		return "Low";
 		//d.insertNNResult(num, i, successcalc2, failcalc2, "FAIL");
 	}
 }
@@ -370,32 +373,54 @@ void newCSV(string older, string newer)
 	newcsv.close();
 	cout << "Success!" << endl;
 }
+void test(int index)
+{
+	//cout << index << endl;
+	if (index == 0)
+	{
+		cout << "Neural Network is Highest" << endl;
+	}
+	if (index == 1)
+	{
+		cout << "Naive Bayes is Highest" << endl;
+	}
+	if (index == 2)
+	{
+		cout << "SVM is Highest" << endl;
+	}
+	if (index == 3)
+	{
+		cout << "J48 is Highest" << endl;
+	}
+}
 int main()
 {
-	dataInput = "C:\\Users\\Lenovo\\Desktop\\Thesis\\READ\\Real Estate Emotion Dataset 20.csv";
-	newInput = "C:\\Users\\Lenovo\\Desktop\\Thesis\\READ\\NewCSV.csv";
-	string svmModel = "C:\\Users\\Lenovo\\Desktop\\Thesis\\READ\\SVMModel.model";
-	svmResults = "C:\\Users\\Lenovo\\Desktop\\Thesis\\READ\\SVMResults.csv";
-	string nbModel = "C:\\Users\\Lenovo\\Desktop\\Thesis\\READ\\NBModel.model";
-	nbResults = "C:\\Users\\Lenovo\\Desktop\\Thesis\\READ\\NBResults.csv";
-	string nnModel = "C:\\Users\\Lenovo\\Desktop\\Thesis\\READ\\NNModel.model";
-	nnResults = "C:\\Users\\Lenovo\\Desktop\\Thesis\\READ\\NNResults.csv";
+	double nnfailcount=0;
+	double nnsuccesscount=0;
+	dataInput = "C:\\Users\\Lenovo\\Desktop\\Thesis\\RREAD\\Real Estate Emotion Dataset 18.csv";
+	newInput = "C:\\Users\\Lenovo\\Desktop\\Thesis\\RREAD\\NewCSV.csv";
+	string svmModel = "C:\\Users\\Lenovo\\Desktop\\Thesis\\RREAD\\SVMModel.model";
+	svmResults = "C:\\Users\\Lenovo\\Desktop\\Thesis\\RREAD\\SVMResults.csv";
+	string nbModel = "C:\\Users\\Lenovo\\Desktop\\Thesis\\RREAD\\NBModel.model";
+	nbResults = "C:\\Users\\Lenovo\\Desktop\\Thesis\\RREAD\\NBResults.csv";
+	string nnModel = "C:\\Users\\Lenovo\\Desktop\\Thesis\\RREAD\\NNModel.model";
+	nnResults = "C:\\Users\\Lenovo\\Desktop\\Thesis\\RREAD\\NNResults.csv";
 	WekaJavaModel(svmModel, svmResults, nbModel, nbResults, nnModel, nnResults);
 	cout << "Model Test" << endl;
 	newCSV(dataInput,newInput);
-	string newcsV = "C:\\Users\\Lenovo\\Desktop\\Thesis\\READ\\NewCSV.csv";
-	string newarfF = "C:\\Users\\Lenovo\\Desktop\\Thesis\\READ\\NewCSV.arff";
-	string j48Model = "C:\\Users\\Lenovo\\Desktop\\Thesis\\READ\\J48Model.model";
-	j48Results = "C:\\Users\\Lenovo\\Desktop\\Thesis\\READ\\J48Results.csv";
+	string newcsV = "C:\\Users\\Lenovo\\Desktop\\Thesis\\RREAD\\NewCSV.csv";
+	string newarfF = "C:\\Users\\Lenovo\\Desktop\\Thesis\\RREAD\\NewCSV.arff";
+	string j48Model = "C:\\Users\\Lenovo\\Desktop\\Thesis\\RREAD\\J48Model.model";
+	j48Results = "C:\\Users\\Lenovo\\Desktop\\Thesis\\RREAD\\J48Results.csv";
 	j48ModelImplementation(newcsV, newarfF, j48Model, j48Results);
-	int NBSuccess = 0;
-	int NBFail = 0;
+	double NBSuccess = 0;
+	double NBFail = 0;
 	string NBfinaldecision;
-	int J48Success = 0;
-	int J48fail = 0;
+	double J48Success = 0;
+	double J48fail = 0;
 	string J48finaldecision;
-	int SVMSuccess = 0;
-	int SVMfail = 0;
+	double SVMSuccess = 0;
+	double SVMfail = 0;
 	string SVMfinaldecision;
 	int i = 1;
 	double joy;
@@ -448,9 +473,9 @@ int main()
 			string dec = SVMdecision(i,joy, fear, disgust, sadness, anger, surprise, contempt, calm, angered, joyful, sorrow);
 			string dec1 = J48decision(i,joy, fear, disgust, sadness, anger, surprise, contempt, calm, angered, joyful, sorrow);
 			string dec2 = NBdecision(i,joy, fear, disgust, sadness, anger, surprise, contempt, calm, angered, joyful, sorrow);
-
-			cout << i << ". SVM: " << dec << " NB: " << dec2 << " Value: " << sout << " J48: " << dec1 << " Neural: ";
-			NNdecision(i,joy, fear, disgust, sadness, anger, surprise, contempt, calm, angered, joyful, sorrow);
+			string dec3 = NNdecision(i, joy, fear, disgust, sadness, anger, surprise, contempt, calm, angered, joyful, sorrow);
+			cout << i << ". SVM: " << dec <<" Value: " <<toCSV[0]<<" NB: " << dec2 << " High: " << toCSV[1] <<" Low: "<<toCSV[2]<< " J48: " << dec1 << " Neural: " << dec3 <<" High: "<<toCSV[3]<<" Low: "<<toCSV[4]<<endl;
+			
 			csv << i << "," << dec << "," << toCSV[0] << "," << dec2 << "," << toCSV[1] << "," << toCSV[2] << "," << dec1 << "," << toCSV[3] << "," << toCSV[4];
 			csv << "\n";
 			if (dec2 == "High")
@@ -465,6 +490,10 @@ int main()
 				J48Success++;
 			else
 				J48fail++;
+			if (dec3 == "High")
+				nnsuccesscount++;
+			else
+				nnfailcount++;
 			i++;
 			if (i > 34)
 			{
@@ -478,6 +507,11 @@ int main()
 	}
 	sample.close();
 	csv.close();
+	string NNfinaldecision;
+	if (nnsuccesscount > nnfailcount)
+		NNfinaldecision = "High";
+	else
+		NNfinaldecision = "Low";
 	if (NBSuccess > NBFail)
 		NBfinaldecision = "High";
 	else
@@ -490,14 +524,52 @@ int main()
 		J48finaldecision = "High";
 	else
 		J48finaldecision = "Low";
-	double nsucmean = nsucsum / 34;
-	double nfaimean = nfaisum / 34;
-	string NNfinaldecision;
-	if (nsucmean > nfaimean)
-		NNfinaldecision = "High";
-	else
-		NNfinaldecision = "Low";
-	cout << "Final Decision: NB: " << NBfinaldecision << " SVM: " << SVMfinaldecision << " J48: " << J48finaldecision << " NN: " << NNfinaldecision;
+	//double nsucmean = nsucsum / 34;
+	//double nfaimean = nfaisum / 34;
+	double highMax[4];
+	double highMaximum;
+	int highindex;
+	double lowMax[4];
+	double lowMaximum;
+	int lowindex;
+	cout <<"Neural Network Success: "<<nnsuccesscount <<" Percent: "<< (nnsuccesscount/34)*100<<"%"<<endl;
+	highMax[0] = (nnsuccesscount / 34) * 100;
+	cout <<"Neural Network Fail "<<nnfailcount <<" Percent "<<(nnfailcount/34)*100<<"%"<<endl;
+	lowMax[0] = (nnfailcount / 34) * 100;
+	cout <<"Naive Bayes Success "<<NBSuccess << " Percent " << (NBSuccess / 34)*100 <<"%"<< endl;
+	highMax[1] = (NBSuccess / 34) * 100;
+	cout <<"Naive Bayes Fail "<<NBFail << " Percent " << (NBFail / 34)*100 <<"%"<<endl;
+	lowMax[1] = (NBFail / 34) * 100;
+	cout <<"SVM Success "<<SVMSuccess << " Percent " << (SVMSuccess / 34)*100 <<"%"<< endl;
+	highMax[2] = (SVMSuccess / 34) * 100;
+	cout <<"SVM Fail "<<SVMfail << " Percent " << (SVMfail / 34)*100 <<"%"<<endl;
+	lowMax[2] = (SVMfail / 34) * 100;
+	cout <<"J48 Success "<<J48Success << " Percent " << (J48Success / 34)*100 <<"%"<< endl;
+	highMax[3] = (J48Success / 34) * 100;
+	cout <<"J48 Fail "<<J48fail << " Percent " << (J48fail / 340)*100 <<"%"<<endl;
+	highMax[3] = (J48fail / 340) * 100;
+	
+	for (int i = 0; i < 4; i++)
+	{
+		if (highMax[i] > highMaximum)
+		{
+			highMaximum = highMax[i];
+			highindex = i;
+		}
+	}
+	cout << "For High: "<<endl;
+	test(highindex);
+	for (int i = 0; i < 4; i++)
+	{
+		if (lowMax[i] > lowMaximum)
+		{
+			lowMaximum = lowMax[i];
+			lowindex = i;
+		}
+	}
+	cout << "For Low: " << endl;
+	test(lowindex);
+	cout << "Final Decision: NB: " << NBfinaldecision << " SVM: " << SVMfinaldecision << " J48: " << J48finaldecision << " NN: " << NNfinaldecision<<endl;
 	//d.databaseclose();
 	
 	system("PAUSE");
